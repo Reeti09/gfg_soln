@@ -42,12 +42,12 @@ class Solution {
     int maxSubarraySum(int[] arr) {
         // Your code here
         int l=arr.length;
-        int maxSofar=arr[0];
+        int maxSoFar=arr[0];
         int maxEnd=arr[0];
         for(int i=1;i<l;i++){
-            maxEnd=Math.max(arr[i], maxEnd+arr[i]);
-            maxSofar=Math.max(maxSofar, maxEnd);
+            maxEnd=Math.max(maxEnd+arr[i], arr[i]);
+            maxSoFar=Math.max(maxEnd, maxSoFar);
         }
-        return maxSofar;
+        return maxSoFar;
     }
 }
