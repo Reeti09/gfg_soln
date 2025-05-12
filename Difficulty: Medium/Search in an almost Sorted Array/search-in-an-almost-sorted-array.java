@@ -7,21 +7,21 @@ import java.util.*;
 
 // User function Template for Java
 class Solution {
-    public int findTarget(int[] arr, int x) {
+    // Make sure the method name is correct and matches the call
+    public int findTarget(int[] arr, int target) {
         int low = 0, high = arr.length - 1;
 
         while (low <= high) {
             int mid = low + (high - low) / 2;
 
-            if (arr[mid] == x) return mid;
-            if (mid > low && arr[mid - 1] == x) return mid - 1;
-            if (mid < high && arr[mid + 1] == x) return mid + 1;
+            if (arr[mid] == target) return mid;
+            if (mid - 1 >= low && arr[mid - 1] == target) return mid - 1;
+            if (mid + 1 <= high && arr[mid + 1] == target) return mid + 1;
 
-            if (x < arr[mid]) {
+            if (target < arr[mid])
                 high = mid - 2;
-            } else {
+            else
                 low = mid + 2;
-            }
         }
 
         return -1;
