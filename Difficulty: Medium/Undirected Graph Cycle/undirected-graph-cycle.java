@@ -1,69 +1,55 @@
-//{ Driver Code Starts
-// Initial Template for Java
-import java.io.*;
 import java.util.*;
-
-class GFG {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int tc = sc.nextInt();
-        while (tc-- > 0) {
-            int V = sc.nextInt();
-            int E = sc.nextInt();
-            int[][] edges = new int[E][2];
-            for (int i = 0; i < E; i++) {
-                edges[i][0] = sc.nextInt();
-                edges[i][1] = sc.nextInt();
-            }
-
-            Solution obj = new Solution();
-            boolean ans = obj.isCycle(V, edges);
-            System.out.println(ans ? "true" : "false");
-            System.out.println("~");
-        }
-        sc.close();
-    }
-}
-
-// } Driver Code Ends
-
-
-
 class Solution {
     public boolean isCycle(int V, int[][] edges) {
-        List<List<Integer>> adj = new ArrayList<>();
-        for (int i = 0; i < V; i++) adj.add(new ArrayList<>());
-
-        // Convert edges to adjacency list
-        for (int[] edge : edges) {
-            int u = edge[0], v = edge[1];
+        // Code here  
+        ArrayList<ArrayList<Integer>> adj=new ArrayList<>();
+        for(int i=0;i<V;i++){
+            adj.add(new ArrayList<>());
+        }
+        for(int[] edge: edges){
+            int u=edge[0];
+            int v=edge[1];
             adj.get(u).add(v);
-            adj.get(v).add(u); // Undirected graph
+            adj.get(v).add(u);
         }
-
-        boolean[] visited = new boolean[V];
-
-        // Check for cycle in each component
-        for (int i = 0; i < V; i++) {
-            if (!visited[i]) {
-                if (dfs(i, -1, visited, adj)) return true;
+        boolean[] visited=new boolean[V];
+        int[] parent=new int[V];
+        Arrays.fill(parent,-1);
+        for(int i=0;i<V;i++){
+            if(!visited[i]){
+                if(detectBfs(i, adj, visited, parent)){
+                    return true;
+                }
+                
             }
+            
         }
         return false;
+        
     }
-
-    private boolean dfs(int node, int parent, boolean[] visited, List<List<Integer>> adj) {
-        visited[node] = true;
-
-        for (int neighbor : adj.get(node)) {
-            if (!visited[neighbor]) {
-                if (dfs(neighbor, node, visited, adj)) return true;
-            } else if (neighbor != parent) { // Found a back edge
+    private boolean detectBfs(int start, ArrayList<ArrayList<Integer>> adj, boolean[] visited, int[] parent){
+        Queue<Integer> q=new LinkedList<>();
+        q.offer(start);
+        visited[start]=true;
+        parent[start]=-1;
+        while(!q.isEmpty()){
+            int u=q.poll();
+            for(int v: adj.get(u)){
+                if(!visited[v]){
+                    visited[v]=true;
+                    parent[v]=u;
+                    q.offer(v);
+                }
+                else if(v!=parent[u]){
                 return true;
+                }
             }
+            
+              
+            
         }
         return false;
+        
     }
-
     
 }
