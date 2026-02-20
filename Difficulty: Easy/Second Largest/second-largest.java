@@ -1,22 +1,18 @@
 class Solution {
     public int getSecondLargest(int[] arr) {
         // code here
-        int n=arr.length;
-        if(n<2) return -1;
-        int largest=Integer.MIN_VALUE;
-        for(int e: arr){
-            if(e>largest){
-                largest=e;
+        int max=-1;
+        int second=-1;
+        for(int num: arr){
+            
+            if(num>max){
+                second=max;
+                max=num;
+            }
+            else if(num>second && num!=max){
+                second=num;
             }
         }
-        int secondL=-1;
-        for(int e: arr){
-            if(e<largest){
-                if(e>secondL){
-                    secondL=e;
-                }
-            }
-        }
-        return secondL;
+        return second;
     }
 }
