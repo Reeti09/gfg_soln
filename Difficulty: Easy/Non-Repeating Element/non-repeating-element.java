@@ -3,13 +3,19 @@
 class Solution {
     public int firstNonRepeating(int[] arr) {
         // Complete the function
+        int result=0;
         Map<Integer, Integer> mp=new HashMap<>();
         for(int num: arr){
             mp.put(num, mp.getOrDefault(num,0)+1);
         }
         for(int num: arr){
-            if(mp.get(num)==1) return num;
+            if(mp.get(num)==1){
+            return num;
+                
+            }
+                
         }
         return 0;
+        
     }
 }
